@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * Jackson Sword — journal theme tokens
+ *
+ * Black and white. White paper, black ink, nothing else — Jackson's art is
+ * pure black line work on a near-white wall, so any warm/coloured token just
+ * fights the assets. The tonal range is carried by GREY, not by hue:
+ * everything below is neutral, and every colour in the site resolves through
+ * these vars (see tailwind.config.js), so this block is the only palette.
+ * ------------------------------------------------------------------ */
+:root {
+  --color-paper: #ffffff;
+  --color-paper-deep: #ededed;
+  --color-ink: #000000;
+  --color-ink-soft: #1b1b1b;
+  --color-muted: #5c5c5c;
+  --color-faint: #9c9c9c;
+  --color-line: #dcdcdc;
+  /* Was a blue ballpoint / green accent / red pen. All black now — the marks
+     read as ink weight and gesture instead of colour. */
+  --color-pen: #000000;
+  --color-accent: #000000;
+  --color-rust: #000000;
+
+  --shadow-page: 0 30px 80px -40px rgba(0, 0, 0, 0.42);
+  --shadow-tape: 0 6px 18px -10px rgba(0, 0, 0, 0.38);
+
+  /* Journal background — Jackson's real paper. This custom property is the ONLY
+     swap point; every .paper-surface and the VideoCard multiply overlay read it. */
+  --paper-image: url('/textures/paper.jpg');
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  font-family: 'Patrick Hand', 'Caveat', cursive;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* No horizontal scroll ever — the page-turn flip must never leak width. */
+#root {
+  overflow-x: clip;
+}
+
+/* ---- Paper surface: warm parchment photo texture over a light base.
+        Kept bright — the ink and marks carry the contrast. ---- */
+.paper-surface {
+  background-color: var(--color-paper);
+  background-image: var(--paper-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Ruled-notebook lines (subtle), neutral grey. */
+.ruled {
+  position: relative;
+}
+.ruled::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2.15rem - 1px),
+    rgba(0, 0, 0, 0.09) calc(2.15rem - 1px),
+    rgba(0, 0, 0, 0.09) 2.15rem
+  );
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+}
+
+.pen {
+  color: var(--color-pen);
+}
+.rust {
+  color: var(--color-rust);
+}
+
+/* Hand headings */
+.hand-hero {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+.hand-title {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+.label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Focus ring — ink outline, keyboard only */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2.5px solid var(--color-pen);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* WriteOn word wrapper — clipped so the reveal wipe reads as a pen stroke. */
+.writeon-word {
+  display: inline-block;
+  white-space: pre;
+  will-change: clip-path, opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
