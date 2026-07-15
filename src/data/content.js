@@ -27,7 +27,6 @@ export const workHeading = "here's all i've done and all i can do for you:"
 
 // Left column — collaborations. Each maps to a drawn-logo slot in the manifest.
 export const collaborations = [
-  { name: 'Phia', logoSlot: 'logoPhia' },
   { name: 'Instagram', logoSlot: 'logoInstagram' },
   { name: 'Adobe', logoSlot: 'logoAdobe' },
   { name: 'Brick', logoSlot: 'logoBrick' },

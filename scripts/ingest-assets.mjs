@@ -34,7 +34,6 @@ const VIDEO_SLOTS = {
   'curved arrow': 'doodleCurvedArrow',
   'sword': 'doodleSword',
   'hashtag': 'doodleHashtag',
-  'phia': 'logoPhia',
   'instagram': 'logoInstagram',
   'adobe': 'logoAdobe',
   'brick': 'logoBrick',

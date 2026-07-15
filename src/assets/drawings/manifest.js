@@ -88,7 +88,6 @@ export const media = {
   doodleSword: { kind: 'media', reveal: 'video', img: '/drawings/doodleSword.png', video: '/videos/doodleSword.webm' },
 
   // --- Collaboration logos (boil loops) ---
-  logoPhia: { kind: 'media', reveal: 'video', img: '/drawings/logoPhia.png', video: '/videos/logoPhia.webm' },
   logoInstagram: { kind: 'media', reveal: 'video', img: '/drawings/logoInstagram.png', video: '/videos/logoInstagram.webm' },
   logoAdobe: { kind: 'media', reveal: 'video', img: '/drawings/logoAdobe.png', video: '/videos/logoAdobe.webm' },
   logoBrick: { kind: 'media', reveal: 'video', img: '/drawings/logoBrick.png', video: '/videos/logoBrick.webm' },
