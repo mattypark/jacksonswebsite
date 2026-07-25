@@ -41,40 +41,50 @@ export const videos = [
   { id: 'v4', title: 'Do you edit on Pr / Ae / Ci?', poster: null, views: '2.0M', reach: '4.8M' },
 ]
 
-// Right column — services.
-// `titleSlot` is Jackson's hand-lettered version of `title`. The text stays as the
-// real heading for screen readers and search; the lettering renders on top of it.
+// Right column — services (copy rewrite 2026-07-24).
+// `titleSlot` is Jackson's hand-lettered version of `title`; the text stays as the
+// real heading for screen readers and search, lettering renders on top.
+// `caseStudies` are Instagram handles → linked chips. Omit for sections with none.
+const ig = (handle) => ({ label: handle, href: `https://instagram.com/${handle}` })
+
 export const services = [
   {
     titleSlot: 'serviceTitle1',
-    title: 'creative direction // personal brand consulting',
+    title: 'creative direction (parasocial)',
     body:
-      'I work one-on-one with founders and creators to sharpen who they are on camera and off. We find the through-line, then build a look, a voice, and a posting rhythm that actually sounds like you.',
-    points: [
-      'worked with 200+ creators and founders to grow their personal brands',
-      'case studies: dillon, jeff, matty p, jayda, saint',
+      'At Parasocial, my creative direction company, we work with creator-founders who have stories to tell but lack the means to tell them. We come on as a fractional creative direction team and partner with our clients to find their target association, desired aesthetics, and production style, then apply that to our backend funnel systems to ensure audience trust and conversions.',
+    caseStudies: [
+      ig('viralbestiesclub'),
+      ig('saintharris'),
+      ig('isaac.scruggss'),
+      ig('peedur.p'),
+      ig('van_minnen'),
     ],
   },
   {
     titleSlot: 'serviceTitle2',
-    title: 'growth operation',
+    title: 'personal brand consulting',
     body:
-      'Content is the top of the funnel — I build the rest. Offers, landing flows, and the systems that turn a viral week into a real pipeline instead of a spike you forget.',
-    points: ['built out full acquisition funnels end-to-end', 'case study: the bent'],
+      "Throughout my time as a content coach, I've helped over 200 creators improve their content's production quality, pace, reach, and engagement, as well as helped numerous accounts surpass 10,000 followers and beyond. My goal is to use artistic expression and creative idea representation to build accounts that stand out and build true presence.",
+    caseStudies: [
+      ig('matty.park'),
+      ig('bouncebackpickle'),
+      // TODO: Logan Walters — no IG handle supplied. Renders as a plain chip
+      // until a real handle exists; swap to ig('<handle>') to make it a link.
+      { label: 'Logan Walters', href: null },
+    ],
   },
   {
     titleSlot: 'serviceTitle3',
     title: 'videography & creative team management',
     body:
-      'In-person shoots, vlogs, and formats — plus the briefs and the team to keep them running when you can not. I direct the edit so every deliverable lands on-brand without you in the room.',
-    points: ['in-person shoots, vlogs, repeatable formats', 'editor briefs + creative team management'],
+      "I offer in-person shoots; vlogs, product short films, or otherwise. Along with creative team management, where I handle content format and editing briefs as well as the team's revisions process and general communication. I've managed multi-person teams across all niches and have run numerous content campaigns to produce a product or service.",
   },
   {
     titleSlot: 'serviceTitle4',
     title: 'brand collaboration & professional editing',
     body:
-      'Editing that respects the story and the pacing, and partnerships that feel native instead of bolted on. Open to brand work when the fit is real.',
-    points: ['worked with brands across lifestyle, tech, and fashion', 'open to new partnerships'],
+      "I've found partnering with companies who share my vision for content a very creatively fulfilling process, and I'm constantly looking for unique products or services to collaborate with. I'm also open to working on one-off videos as an editor.",
   },
 ]
 

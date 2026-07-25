@@ -41,14 +41,15 @@ const VIDEO_SLOTS = {
 }
 
 /**
- * Still-only art. No .mov twin exists for any of these.
+ * Still-only art from the original asset sheet. No .mov twin exists for any.
  *
- * The title*.png numbering does NOT match the order of services[] in content.js —
- * it was checked by eye against the rendered art, so don't "fix" it to look tidy:
- *   title5 = "Creative Direction // Personal Brand Consulting"  (services[0])
- *   title3 = "Growth Operation"                                 (services[1])
- *   title2 = "Videography & Creative Team Management"           (services[2])
- *   title4 = "Brand Collaboration & Professional Editing"       (services[3])
+ * The title*.png numbering does NOT match services[] order — checked by eye, so
+ * don't "fix" it to look tidy. Only titles 2 and 4 survive the 2026-07-24 copy
+ * rewrite; title3 ("Growth Operation") and title5 (combined "Creative Direction //
+ * Personal Brand Consulting") are RETIRED — services 1 and 2 now come from
+ * EXTRA_TITLE_SLOTS below.
+ *   title2 = "Videography & Creative Team Management"   (services[2])
+ *   title4 = "Brand Collaboration & Professional Editing" (services[3])
  */
 const STILL_SLOTS = {
   'Signature': 'signature',
@@ -58,11 +59,22 @@ const STILL_SLOTS = {
   'Name': 'headingName',
   'Services': 'headingServices',
   'Collaborations': 'headingCollaborations',
-  'title5': 'serviceTitle1',
-  'title3': 'serviceTitle2',
   'title2': 'serviceTitle3',
   'title4': 'serviceTitle4',
 }
+
+/**
+ * Revised title art (2026-07-24). Copy split into two sections, redrawn by
+ * Jackson. Sourced from incoming/extra-titles/ (the two files from ~/Downloads),
+ * not the original asset sheet.
+ *   creativeDirectionParasocial = "Creative Direction (▨PARASOCIAL)"  (services[0])
+ *   personalBrandConsulting     = "Personal Brand Consulting"          (services[1])
+ */
+const EXTRA_TITLE_SLOTS = {
+  'creativeDirectionParasocial': 'serviceTitle1',
+  'personalBrandConsulting': 'serviceTitle2',
+}
+const EXTRA_SRC = 'incoming/extra-titles'
 
 const ff = (args) => execFileSync('ffmpeg', ['-y', '-v', 'error', ...args], { stdio: 'pipe' })
 const probe = (file, entries) =>
@@ -116,18 +128,24 @@ for (const file of readdirSync(join(SRC, 'Animated')).filter((f) => f.endsWith('
   console.log(`  ${slot.padEnd(20)} ${kb(webm).padStart(8)} webm  ${kb(poster).padStart(8)} poster  alpha:ok`)
 }
 
-console.log('\nStills\n')
-for (const [stem, slot] of Object.entries(STILL_SLOTS)) {
-  const src = readdirSync(SRC).find((f) => basename(f, extname(f)) === stem && f.endsWith('.png'))
+// Copy a transparent PNG straight into public/drawings under its slot name.
+function placeStill(srcDir, stem, slot) {
+  const src = readdirSync(srcDir).find((f) => basename(f, extname(f)) === stem && f.endsWith('.png'))
   if (!src) {
-    console.log(`  ${slot.padEnd(20)} MISSING (${stem}.png)`)
-    continue
+    console.log(`  ${slot.padEnd(20)} MISSING (${stem}.png in ${srcDir})`)
+    return
   }
   const dest = join(OUT_DRAW, `${slot}.png`)
-  copyFileSync(join(SRC, src), dest)
+  copyFileSync(join(srcDir, src), dest)
   total += statSync(dest).size
   console.log(`  ${slot.padEnd(20)} ${kb(dest).padStart(8)}  ${probe(dest, 'width,height').replace(',', 'x')}`)
 }
+
+console.log('\nStills\n')
+for (const [stem, slot] of Object.entries(STILL_SLOTS)) placeStill(SRC, stem, slot)
+
+console.log('\nRevised titles (2026-07-24)\n')
+for (const [stem, slot] of Object.entries(EXTRA_TITLE_SLOTS)) placeStill(EXTRA_SRC, stem, slot)
 
 console.log('\nPaper texture\n')
 // Opaque rgb24 photo used as a full-bleed background — JPEG, no alpha needed.

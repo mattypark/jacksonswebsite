@@ -34,30 +34,55 @@ export default function Services() {
       <ol className="space-y-7">
         {services.map((s, i) => (
           <li key={i} className="relative">
-            {/* Width-driven: these are ~800px of lettering on a ~90px-tall canvas.
-                Sized by height they'd render smaller than the body copy under them. */}
+            {/* Height-normalised so the four hand-lettered headings read as peers.
+                Sizing by width made tall-aspect titles ("Personal Brand Consulting")
+                balloon. Fixed height + auto width + max-w-full keeps them consistent
+                and prevents overflow on narrow screens. The [&_img] overrides beat
+                DrawnMedia's default w-full/h-auto (higher descendant specificity). */}
             <h4 className="leading-tight">
               <span className="sr-only">{s.title}</span>
-              <DrawnSVG
-                slot={s.titleSlot}
-                trigger="inview"
-                duration={1.1}
-                delay={0.1}
-                className="w-[min(100%,30rem)]"
-              />
+              <div className="h-[clamp(2rem,1.2rem+2.2vw,3.4rem)] [&_img]:h-full [&_img]:w-auto [&_img]:max-w-full [&_img]:object-left">
+                <DrawnSVG
+                  slot={s.titleSlot}
+                  trigger="inview"
+                  duration={1.1}
+                  delay={0.1}
+                  className="h-full"
+                />
+              </div>
             </h4>
             <p className="mt-3 max-w-prose text-ink-soft">{s.body}</p>
-            <ul className="mt-2 space-y-1 pl-5">
-              {s.points.map((p, pi) => (
-                <li key={pi} className="relative text-muted">
-                  <span
-                    className="absolute -left-4 top-2 h-1.5 w-1.5 rounded-full bg-rust"
-                    aria-hidden="true"
-                  />
-                  {p}
-                </li>
-              ))}
-            </ul>
+            {s.caseStudies?.length > 0 && (
+              <div className="mt-3">
+                <span className="label">case studies</span>
+                <ul className="mt-1.5 flex flex-wrap gap-x-2 gap-y-1.5">
+                  {s.caseStudies.map((c) => {
+                    const chip =
+                      'inline-block rounded-full border px-3 py-1 text-[0.95em]'
+                    // No href → plain chip (handle not yet supplied). Never ship a
+                    // guessed social link.
+                    return (
+                      <li key={c.label}>
+                        {c.href ? (
+                          <a
+                            href={c.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`${chip} border-ink/25 text-ink-soft transition-colors duration-200 hover:border-ink hover:text-ink`}
+                          >
+                            {c.label}
+                          </a>
+                        ) : (
+                          <span className={`${chip} border-ink/15 text-muted`}>
+                            {c.label}
+                          </span>
+                        )}
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            )}
           </li>
         ))}
       </ol>
