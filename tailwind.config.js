@@ -16,9 +16,10 @@ export default {
         rust: 'var(--color-rust)',
       },
       fontFamily: {
-        // Handwriting stack — Caveat for headings, Patrick Hand for body scrawl.
-        hand: ['Caveat', 'ui-rounded', 'cursive'],
-        scrawl: ['"Patrick Hand"', 'Caveat', 'cursive'],
+        // Jackson's own handwriting, converted to a typeface. Caveat is only
+        // the fallback while the file loads.
+        hand: ['"Tul The Line"', 'Caveat', 'cursive'],
+        scrawl: ['"Tul The Line"', 'Caveat', 'cursive'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {

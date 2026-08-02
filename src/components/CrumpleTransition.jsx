@@ -171,36 +171,102 @@ export default function CrumpleTransition({ front, back, scroll = 240 }) {
 
 /**
  * Placeholder wad, used until a real crumple photo lands in /public/photos.
- * Drawn creases, not a photo — reads as paper without pretending to be one.
+ *
+ * The first version was an outlined octagon with a few creases through it — it
+ * read as a folded napkin, not a ball of paper. Crumpled paper reads crumpled
+ * because of *shading*: dozens of irregular facets, each catching light at a
+ * different angle, with a ragged silhouette. So this is built as filled facets
+ * in varying greys with no outline, and the crease lines only sit where two
+ * facets meet.
  */
+// Deliberately ragged: a smooth outline reads as a pebble. The in-and-out
+// vertices are the torn corners sticking out of a real ball of paper. Facets
+// are clipped to this, so it can be reshaped without touching them.
+// Deliberately irregular. A smooth outline reads as a pebble and an evenly
+// spiked one reads as a sunburst — real crumpled paper is mostly lumpy with a
+// few torn corners sticking out and a few pinched notches. Facets are clipped
+// to this, so it can be reshaped without touching them.
+const WAD_SILHOUETTE =
+  'M46 104 L52 80 L66 60 L88 46 L96 58 L118 34 L142 28 L150 44 L172 26 L198 34 L206 52 L228 46 L248 70 L238 84 L260 100 L250 124 L256 140 L230 146 L212 168 L196 154 L176 178 L150 176 L140 160 L120 178 L96 166 L88 146 L66 150 L50 128 Z'
+
+// [path, grey]. Ordered back-to-front; greys run from deep shadow to blown
+// highlight so the eye reads volume instead of a flat outline.
+const WAD_FACETS = [
+  ['M52 112 L44 82 L62 58 L104 74 L96 118 Z', '#d8d8d8'],
+  ['M62 58 L92 40 L128 30 L134 62 L104 74 Z', '#f2f2f2'],
+  ['M128 30 L164 26 L200 34 L182 66 L134 62 Z', '#ffffff'],
+  ['M200 34 L228 48 L252 74 L220 84 L182 66 Z', '#e4e4e4'],
+  ['M252 74 L258 104 L250 134 L222 122 L220 84 Z', '#cfcfcf'],
+  ['M104 74 L134 62 L146 100 L118 112 L96 118 Z', '#fbfbfb'],
+  ['M134 62 L182 66 L188 96 L146 100 Z', '#e9e9e9'],
+  ['M182 66 L220 84 L222 122 L188 96 Z', '#f6f6f6'],
+  ['M96 118 L118 112 L124 148 L96 152 Z', '#c4c4c4'],
+  ['M118 112 L146 100 L162 132 L124 148 Z', '#ededed'],
+  ['M146 100 L188 96 L196 130 L162 132 Z', '#fdfdfd'],
+  ['M188 96 L222 122 L250 134 L212 146 L196 130 Z', '#dadada'],
+  ['M52 112 L96 118 L96 152 L60 138 Z', '#bdbdbd'],
+  ['M96 152 L124 148 L118 174 L82 158 Z', '#cccccc'],
+  ['M124 148 L162 132 L158 178 L118 174 Z', '#e6e6e6'],
+  ['M162 132 L196 130 L212 146 L196 172 L158 178 Z', '#d2d2d2'],
+  ['M212 146 L250 134 L228 158 L196 172 Z', '#b6b6b6'],
+]
+
+// Hairline creases over the facet seams — the fold lines you actually see.
+const WAD_CREASES = [
+  'M104 74 L146 100 L188 96',
+  'M146 100 L124 148',
+  'M188 96 L212 146',
+  'M96 118 L118 112 L162 132 L196 130',
+  'M134 62 L146 100',
+  'M220 84 L222 122',
+  'M96 152 L124 148 L158 178',
+]
+
 function PaperWad() {
   return (
     <svg viewBox="0 0 300 200" className="h-full w-full" aria-hidden="true">
+      <defs>
+        {/* soft falloff so the whole ball sits in one light, not flat-lit */}
+        <radialGradient id="wad-light" cx="38%" cy="28%" r="78%">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.55" />
+          <stop offset="100%" stopColor="#000" stopOpacity="0.22" />
+        </radialGradient>
+        <clipPath id="wad-clip">
+          <path d={WAD_SILHOUETTE} />
+        </clipPath>
+      </defs>
+
+      <g clipPath="url(#wad-clip)">
+        {/* base tone so the rim between the facet field and the torn edge is
+            paper, not the bare gradient */}
+        <path d={WAD_SILHOUETTE} fill="#e2e2e2" />
+        {WAD_FACETS.map(([d, fill], i) => (
+          <path key={i} d={d} fill={fill} />
+        ))}
+        {WAD_CREASES.map((d, i) => (
+          <path
+            key={i}
+            d={d}
+            fill="none"
+            stroke="#000"
+            strokeWidth="0.9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.28"
+          />
+        ))}
+        <path d={WAD_SILHOUETTE} fill="url(#wad-light)" />
+      </g>
+
+      {/* faint edge only — a hard outline is what made the first pass read flat */}
       <path
-        d="M64 118 L48 74 L96 40 L156 30 L212 52 L246 92 L232 146 L178 172 L112 170 Z"
-        fill="var(--color-paper)"
-        stroke="var(--color-ink)"
-        strokeWidth="2.5"
+        d={WAD_SILHOUETTE}
+        fill="none"
+        stroke="#000"
+        strokeWidth="1.1"
         strokeLinejoin="round"
+        opacity="0.3"
       />
-      {[
-        'M96 40 L120 96 L64 118',
-        'M120 96 L178 172',
-        'M120 96 L212 52',
-        'M120 96 L232 146',
-        'M156 30 L186 84 L246 92',
-        'M186 84 L232 146',
-      ].map((d, i) => (
-        <path
-          key={i}
-          d={d}
-          fill="none"
-          stroke="var(--color-ink)"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          opacity="0.5"
-        />
-      ))}
     </svg>
   )
 }

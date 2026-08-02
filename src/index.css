@@ -11,6 +11,15 @@
  * everything below is neutral, and every colour in the site resolves through
  * these vars (see tailwind.config.js), so this block is the only palette.
  * ------------------------------------------------------------------ */
+/* Jackson's handwriting, as a real typeface. Everything on the site is set in
+   it — Caveat only survives as the fallback while the file loads. */
+@font-face {
+  font-family: 'Tul The Line';
+  src: url('/fonts/tul-the-line.ttf') format('truetype');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 :root {
   --color-paper: #ffffff;
   --color-paper-deep: #ededed;
@@ -48,7 +57,7 @@ body {
   min-height: 100svh;
   color: var(--color-ink);
   background-color: var(--color-paper);
-  font-family: 'Patrick Hand', 'Caveat', cursive;
+  font-family: 'Tul The Line', 'Caveat', cursive;
   font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -99,13 +108,13 @@ body {
 
 /* Hand headings */
 .hand-hero {
-  font-family: 'Caveat', cursive;
+  font-family: 'Tul The Line', 'Caveat', cursive;
   font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.01em;
 }
 .hand-title {
-  font-family: 'Caveat', cursive;
+  font-family: 'Tul The Line', 'Caveat', cursive;
   font-weight: 600;
   line-height: 1.08;
 }
