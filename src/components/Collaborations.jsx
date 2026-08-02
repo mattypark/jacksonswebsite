@@ -1,10 +1,12 @@
 import DrawnSVG from './DrawnSVG'
-import VideoCard from './VideoCard'
-import { collaborations, videos } from '../data/content'
+import { collaborations } from '../data/content'
 
 /**
- * Left column of page 2 — the brands Jackson has worked with (his drawn logos,
- * boiling) and a scatter of short-form clips with view badges.
+ * The brands Jackson has worked with — his drawn logos, boiling.
+ *
+ * The clip scatter used to live here too. It moved out to `Reel` so the logos
+ * can sit on their own sheet: a list of four names doesn't need the same
+ * width as a grid of video cards.
  */
 export default function Collaborations() {
   return (
@@ -19,7 +21,7 @@ export default function Collaborations() {
         />
       </h3>
 
-      <ul className="mb-10 space-y-4">
+      <ul className="space-y-4">
         {collaborations.map((c, i) => (
           <li key={c.name} className="flex items-center gap-4">
             {/* Square box: the logo loops are a square 1920² canvas. */}
@@ -39,13 +41,6 @@ export default function Collaborations() {
           </li>
         ))}
       </ul>
-
-      {/* clip scatter */}
-      <div className="flex flex-wrap gap-x-6 gap-y-10 pr-2">
-        {videos.map((v, i) => (
-          <VideoCard key={v.id} video={v} rotate={[-3, 2, -1.5, 2.5][i % 4]} />
-        ))}
-      </div>
     </div>
   )
 }

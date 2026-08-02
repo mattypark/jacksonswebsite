@@ -25,6 +25,7 @@ export const intro = {
 export const heroPhoto = {
   src: '/photos/jackson.jpg',
   alt: 'Jackson Sword at his desk, mid-edit',
+  caption: `${identity.age}, ${identity.city.toLowerCase()}, creative director`,
 }
 
 export const crumplePhoto = {

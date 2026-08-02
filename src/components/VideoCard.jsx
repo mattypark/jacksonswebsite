@@ -32,7 +32,9 @@ export default function VideoCard({ video, rotate = 0 }) {
 
   return (
     <figure
-      className="relative w-full max-w-[190px] shrink-0"
+      // Grows with the viewport — at a fixed 190px the grid left most of a wide
+      // screen empty next to the sheets it sits beside.
+      className="relative w-full max-w-[clamp(11rem,15vw,17rem)] shrink-0"
       style={{ transform: `rotate(${rotate}deg)` }}
     >
       <div className="relative aspect-[9/16] overflow-hidden rounded-[10px] bg-paper-deep shadow-[var(--shadow-tape)] ring-1 ring-line">

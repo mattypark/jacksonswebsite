@@ -11,7 +11,9 @@ export default function ApplyCTA() {
   return (
     <section
       aria-labelledby="apply-lead"
-      className="relative mx-auto flex w-full max-w-3xl flex-col items-center px-6 pb-20 pt-10 text-center"
+      // Padding is light because this now sits inside a PaperCard that supplies
+      // its own.
+      className="relative mx-auto flex w-full max-w-3xl flex-col items-center px-2 pb-6 pt-4 text-center"
     >
       <WriteOn
         as="p"

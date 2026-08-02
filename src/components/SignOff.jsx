@@ -7,7 +7,7 @@ import { cta, identity } from '../data/content'
  */
 export default function SignOff() {
   return (
-    <section className="relative mx-auto flex w-full max-w-3xl flex-col items-end px-6 pb-28 pr-10 sm:pr-16">
+    <section className="relative mx-auto flex w-full max-w-5xl flex-col items-end px-2 pb-2 pr-2 pt-6 sm:pr-8">
       <WriteOn
         as="p"
         text={cta.signoff}

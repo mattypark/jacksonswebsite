@@ -80,6 +80,14 @@ body {
   background-attachment: fixed;
 }
 
+/* ---- Desk / studio wall: the grey the paper sheets sit on. Same surface as
+        the name header, so the page reads as one continuous wall. ---- */
+.desk-surface {
+  background-color: #8d8d8b;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.35) 1px, transparent 1.4px);
+  background-size: 38px 38px;
+}
+
 /* Ruled-notebook lines (subtle), neutral grey. */
 .ruled {
   position: relative;

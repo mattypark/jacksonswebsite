@@ -18,14 +18,14 @@ export default function NameHeader() {
   return (
     <header className="relative flex min-h-[46svh] w-full items-center justify-center overflow-hidden px-6 py-16 sm:min-h-[52svh]">
       {/* studio wall */}
+      <div aria-hidden="true" className="desk-surface absolute inset-0" />
+      {/* one soft light source across the wall */}
       <div
         aria-hidden="true"
         className="absolute inset-0"
         style={{
-          backgroundColor: '#8d8d8b',
           backgroundImage:
-            'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), transparent 55%), radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1.4px)',
-          backgroundSize: 'auto, 38px 38px',
+            'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), transparent 55%)',
         }}
       />
 
