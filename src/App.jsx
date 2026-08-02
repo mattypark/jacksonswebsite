@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { useLenis } from './hooks/useLenis'
 import HeroPage from './components/HeroPage'
-import PageTurn from './components/PageTurn'
+import CrumpleTransition from './components/CrumpleTransition'
 import WorkPage, { WorkCover } from './components/WorkPage'
 import ApplyCTA from './components/ApplyCTA'
 import SignOff from './components/SignOff'
@@ -23,7 +23,7 @@ export default function App() {
         <PaperAtmosphere />
       </Suspense>
 
-      <PageTurn front={<HeroPage />} back={<WorkCover />} />
+      <CrumpleTransition front={<HeroPage />} back={<WorkCover />} />
 
       <main className="paper-surface ruled relative">
         <WorkPage />

@@ -8,19 +8,28 @@ export const identity = {
   applyHref: '#', // TODO: swap for the real application form URL
 }
 
-// Roles that write in and get struck out, in order. The last one stays.
-export const roles = [
-  { text: 'professional editor', struck: true },
-  { text: 'brand collaborator', struck: true },
-  { text: 'content coach', struck: true },
-  { text: 'creative director', struck: true },
-  { text: 'branding consultant', struck: true },
-  { text: 'multifaceted artist :)', struck: false },
-]
+// The one role. No strike-list any more — the intro used to cycle five struck
+// job titles before landing here, which made the opening long. It just says it.
+export const artistLine = 'multifaceted artist :)'
 
 export const intro = {
-  greeting: 'Hey,',
-  lines: [`my name is ${'Jackson Sword'},`, `i'm 23, live in NYC, and am a..`],
+  greeting: 'hey,',
+  // One line, one breath. Trails off into the taped photo, answered below by
+  // `artistLine`.
+  line: `my name is ${identity.name.toLowerCase()}, i'm ${identity.age}, live in ${identity.city}, am a ...`,
+}
+
+// Taped hero photo + the crumple that carries page 1 into the work page.
+// Both are drop-in slots: put the real files at these paths and they take over
+// from the placeholders with no code change.
+export const heroPhoto = {
+  src: '/photos/jackson.jpg',
+  alt: 'Jackson Sword at his desk, mid-edit',
+}
+
+export const crumplePhoto = {
+  src: '/photos/crumple.jpg',
+  alt: '',
 }
 
 export const workHeading = "here's all i've done and all i can do for you:"
